@@ -53,7 +53,6 @@ fun MyCategorizationScreen() {
 
             Spacer(modifier = Modifier.height(75.dp))
 
-            // Second row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -64,7 +63,6 @@ fun MyCategorizationScreen() {
 
             Spacer(modifier = Modifier.height(70.dp))
 
-            // Third row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
