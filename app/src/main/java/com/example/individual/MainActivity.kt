@@ -16,12 +16,14 @@ import com.example.individual.ui.theme.IndividualTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Enable edge-to-edge content
         enableEdgeToEdge()
+
         setContent {
             IndividualTheme {
-
+                MainScreen()
             }
         }
     }
 }
-
