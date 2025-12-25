@@ -13,9 +13,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.OutlinedTextField
+import androidx.navigation.NavController
+
 
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController)  {
     val searchQuery = remember { mutableStateOf("") }
 
     Column(
@@ -31,7 +33,7 @@ fun MainScreen() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Button(
-                onClick = { },
+                onClick = {navController.navigate("categorization") },
                 modifier = Modifier
                     .width(160.dp)
                     .height(80.dp)

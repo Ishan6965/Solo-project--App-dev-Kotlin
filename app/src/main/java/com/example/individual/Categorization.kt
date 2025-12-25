@@ -11,13 +11,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun MyCategorizationScreen() {
+fun MyCategorizationScreen(navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Top gray section (small, flat)
+
+        // Top gray header
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -32,23 +35,30 @@ fun MyCategorizationScreen() {
             )
         }
 
-        // Yellow section filling remaining space
+        // Yellow main section
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFFFFEB3B)) // yellow
+                .background(Color(0xFFFFEB3B))
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Spacer(modifier = Modifier.height(170.dp)) // push buttons lower
 
-            // First row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                CategoryButton(text = "Short term Goals", modifier = Modifier.weight(1f))
-                CategoryButton(text = "Long term Goals", modifier = Modifier.weight(1f))
+                CategoryButton(
+                    text = "Short term Goals",
+                    onClick = { navController.navigate("short_term") },
+                    modifier = Modifier.weight(1f)
+                )
+                CategoryButton(
+                    text = "Long term Goals",
+                    onClick = { navController.navigate("long_term") },
+                    modifier = Modifier.weight(1f)
+                )
             }
 
             Spacer(modifier = Modifier.height(75.dp))
@@ -57,8 +67,16 @@ fun MyCategorizationScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                CategoryButton(text = "Wishlist", modifier = Modifier.weight(1f))
-                CategoryButton(text = "Shopping List", modifier = Modifier.weight(1f))
+                CategoryButton(
+                    text = "Wishlist",
+                    onClick = { navController.navigate("wishlist") },
+                    modifier = Modifier.weight(1f)
+                )
+                CategoryButton(
+                    text = "Shopping List",
+                    onClick = { /* TODO: navigate("shopping_list") */ },
+                    modifier = Modifier.weight(1f)
+                )
             }
 
             Spacer(modifier = Modifier.height(70.dp))
@@ -67,17 +85,29 @@ fun MyCategorizationScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                CategoryButton(text = "Notes", modifier = Modifier.weight(1f))
-                CategoryButton(text = "Custom", modifier = Modifier.weight(1f))
+                CategoryButton(
+                    text = "Notes",
+                    onClick = { /* TODO: navigate("notes") */ },
+                    modifier = Modifier.weight(1f)
+                )
+                CategoryButton(
+                    text = "Custom",
+                    onClick = { /* TODO: navigate("custom") */ },
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
     }
 }
 
 @Composable
-private fun CategoryButton(text: String, modifier: Modifier = Modifier) {
+private fun RowScope.CategoryButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Button(
-        onClick = { /* TODO: handle click */ },
+        onClick = onClick,
         modifier = modifier.height(80.dp)
     ) {
         Text(text, fontSize = 20.sp)
@@ -87,5 +117,5 @@ private fun CategoryButton(text: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true, device = "id:pixel_4")
 @Composable
 fun PreviewMyCategorizationScreen() {
-    MyCategorizationScreen()
+    MyCategorizationScreen(navController = rememberNavController())
 }
