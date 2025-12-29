@@ -42,7 +42,7 @@ fun MainScreen(navController: NavController)  {
             }
 
             Button(
-                onClick = { },
+                onClick = {navController.navigate("settings_feedback") },
                 modifier = Modifier
                     .width(160.dp)
                     .height(80.dp)

@@ -37,9 +37,9 @@ fun AppNavigation() {
             WishlistScreen(navController)
         }
 
-        // You can add the remaining category screens here later:
-        // composable("shopping_list") { ShoppingListScreen(navController) }
-        // composable("notes") { NotesScreen(navController) }
-        // composable("custom") { CustomScreen(navController) }
+        composable("settings_feedback") {
+            SettingsFeedbackScreen(navController)
+        }
+
     }
 }
