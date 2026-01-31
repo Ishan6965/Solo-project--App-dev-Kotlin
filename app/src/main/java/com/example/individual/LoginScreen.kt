@@ -1,5 +1,6 @@
 package com.example.individual
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -9,18 +10,23 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.individual.R
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun LoginScreen(navController: NavController) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+    val auth = FirebaseAuth.getInstance() // Firebase Auth instance
 
     Column(
         modifier = Modifier
@@ -30,12 +36,11 @@ fun LoginScreen(navController: NavController) {
         verticalArrangement = Arrangement.Top
     ) {
 
-        // Small image at the top
         Image(
             painter = painterResource(id = R.drawable.pic2),
             contentDescription = "Login Image",
             modifier = Modifier
-                .size(120.dp) // small image
+                .size(120.dp)
                 .padding(top = 20.dp, bottom = 20.dp)
         )
 
@@ -59,7 +64,29 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { /* Handle login with Firebase here */ },
+            onClick = {
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                    return@Button
+                }
+
+                // Firebase login
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
+                            navController.navigate("main") {
+                                popUpTo("login") { inclusive = true } // removes login from back stack
+                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Login Failed: ${task.exception?.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Login", fontSize = 20.sp)
