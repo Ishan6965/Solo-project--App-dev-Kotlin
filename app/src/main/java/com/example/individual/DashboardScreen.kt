@@ -55,23 +55,33 @@ fun DashboardScreen(navController: NavController) {
                 painter = painterResource(id = R.drawable.pic1),
                 contentDescription = "Dashboard Image",
                 modifier = Modifier
-                    .size(200.dp)
+                    .size(300.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Text below image (bigger, dark blue)
+            // Main text below image
             Text(
-                text = "Start your transaction",
-                fontSize = 24.sp, // bigger
+                text = "WELCOME",
+                fontSize = 33.sp, // bigger
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFF0D47A1) // dark blue
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Additional welcome text
+            Text(
+                text = "Start your transaction",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.Red
             )
         }
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        // Login/Register button at bottom (bigger)
+        // Login/Register button at bottom
         Box(
             modifier = Modifier
                 .fillMaxWidth()
