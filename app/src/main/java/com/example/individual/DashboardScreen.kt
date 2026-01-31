@@ -21,7 +21,7 @@ fun DashboardScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Yellow) // yellow background for the screen
+            .background(Color.Yellow) // yellow background
     ) {
 
         // Top Green bar with Dashboard text
@@ -40,27 +40,38 @@ fun DashboardScreen(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        // Center image
-        Box(
+        // Center image with text below
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            contentAlignment = Alignment.Center
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
-            // Replace with your own image resource
+            // Image
             Image(
                 painter = painterResource(id = R.drawable.pic1),
                 contentDescription = "Dashboard Image",
                 modifier = Modifier
                     .size(200.dp)
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Text below image (bigger, dark blue)
+            Text(
+                text = "Start your transaction",
+                fontSize = 24.sp, // bigger
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFF0D47A1) // dark blue
+            )
         }
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
-        // Login/Register button at bottom
+        // Login/Register button at bottom (bigger)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -69,10 +80,13 @@ fun DashboardScreen(navController: NavController) {
         ) {
             Button(
                 onClick = { navController.navigate("login") },
+                modifier = Modifier
+                    .width(250.dp) // slightly bigger
+                    .height(70.dp) // taller button
             ) {
                 Text(
                     text = "Login / Register",
-                    fontSize = 24.sp,
+                    fontSize = 26.sp, // slightly bigger text
                     color = Color.Red
                 )
             }
