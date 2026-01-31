@@ -11,10 +11,25 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = "main"
+        startDestination = "dashboard" // Dashboard is the first screen
     ) {
 
-        // Main screen
+        // Dashboard Screen
+        composable("dashboard") {
+            DashboardScreen(navController)
+        }
+
+        // Login Screen
+        composable("login") {
+            LoginScreen(navController)
+        }
+
+        // Sign Up Screen
+        composable("signup") {
+            SignUpScreen(navController)
+        }
+
+        // Main screen (your existing app screen)
         composable("main") {
             MainScreen(navController)
         }
@@ -24,7 +39,7 @@ fun AppNavigation() {
             MyCategorizationScreen(navController)
         }
 
-        // Category screens
+        // Category-specific screens
         composable("short_term") {
             ShortTermScreen(navController)
         }
@@ -37,9 +52,9 @@ fun AppNavigation() {
             WishlistScreen(navController)
         }
 
+        // Settings & Feedback screen
         composable("settings_feedback") {
             SettingsFeedbackScreen(navController)
         }
-
     }
 }

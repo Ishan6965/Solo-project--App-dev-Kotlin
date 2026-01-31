@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.individual"
-    compileSdk = 36 // fixed syntax
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.individual"
@@ -43,27 +43,32 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3" // match your Compose version
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 }
 
 dependencies {
-    // AndroidX Core & Lifecycle
+    // AndroidX
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-
-    // Activity & Compose
     implementation(libs.androidx.activity.compose)
+
+    // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    // Navigation
     implementation("androidx.navigation:navigation-compose:2.9.6")
 
-    // Firebase
-    implementation("com.google.firebase:firebase-firestore-ktx:24.8.1") // Firestore
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.0")      // Auth (optional)
+    // Firebase BOM
+    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
+
+    // Firebase dependencies
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
 
     // Testing
     testImplementation(libs.junit)
@@ -72,7 +77,7 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
-    // Debug
+    // Debugging
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
