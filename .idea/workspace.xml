@@ -10,35 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b04fe88-b536-4775-acd8-598ea4130c07" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/AndroidProjectSystem.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/deploymentTargetSelector.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/migrations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/androidTest/java/com/example/dashboard/ExampleInstrumentedTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/main/java/com/example/dashboard/Dashboard_UI.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/main/java/com/example/dashboard/ui/theme/Color.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/main/java/com/example/dashboard/ui/theme/Theme.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/main/java/com/example/dashboard/ui/theme/Type.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/main/res/drawable/pic.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/main/res/values/themes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Dashboard/app/src/test/java/com/example/dashboard/ExampleUnitTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ExpenseTracker_37b" beforeDir="false" afterPath="$PROJECT_DIR$/../ExpenseTracker_37b" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/individual/AppNavigation.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/individual/AppNavigation.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/individual/MainScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/individual/MainScreen.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +73,11 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/regmi/AndroidStudioProjects/Individual_Project&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\regmi\AndroidStudioProjects\Individual_Project\app" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="Individual.app" />
@@ -183,5 +161,21 @@
       <updated>1766555872894</updated>
     </task>
     <servers />
+  </component>
+  <component name="play_dynamic_filters_status">
+    <option name="appIdToCheckInfo">
+      <map>
+        <entry key="com.example.individual">
+          <value>
+            <CheckInfo lastCheckTimestamp="1769849783187" />
+          </value>
+        </entry>
+        <entry key="com.example.individual.test">
+          <value>
+            <CheckInfo lastCheckTimestamp="1769849783172" />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
