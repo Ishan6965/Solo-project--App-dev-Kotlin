@@ -19,10 +19,9 @@ fun SettingsFeedbackScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFF9C4)) // light yellow
+            .background(Color(0xFFFFF9C4))
     ) {
 
-        // Top title bar
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -39,7 +38,6 @@ fun SettingsFeedbackScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(190.dp))
 
-        // Buttons
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally

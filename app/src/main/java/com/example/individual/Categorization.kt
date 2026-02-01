@@ -20,7 +20,6 @@ fun MyCategorizationScreen(navController: NavController) {
         modifier = Modifier.fillMaxSize()
     ) {
 
-        // Top gray header
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -35,7 +34,6 @@ fun MyCategorizationScreen(navController: NavController) {
             )
         }
 
-        // Yellow main section
         Column(
             modifier = Modifier
                 .fillMaxSize()
