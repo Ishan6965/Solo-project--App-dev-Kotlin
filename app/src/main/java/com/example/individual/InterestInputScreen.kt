@@ -3,8 +3,12 @@ package com.example.individual
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,12 +22,13 @@ import kotlinx.coroutines.launch
 fun InterestInputScreen(navController: NavController, category: String) {
     val context = LocalContext.current
     var interestText by remember { mutableStateOf("") }
-    var interests by remember { mutableStateOf(listOf<Pair<String, String>>()) } // Pair<interest, docId>
+    var interests by remember { mutableStateOf(listOf<Pair<String, String>>()) } // Pair<text, docId>
     val scope = rememberCoroutineScope()
 
     // Load interests
     LaunchedEffect(category) {
         interests = FirestoreHelper.getInterestsWithId(category)
+            .map { (interest, docId) -> Pair(interest.toString(), docId.toString()) }
     }
 
     Column(
@@ -32,7 +37,6 @@ fun InterestInputScreen(navController: NavController, category: String) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text("Write your interests for $category", fontSize = 24.sp)
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -50,8 +54,8 @@ fun InterestInputScreen(navController: NavController, category: String) {
                 if (interestText.isNotBlank()) {
                     scope.launch {
                         try {
-                            FirestoreHelper.addInterest(category, interestText)
-                            interests = FirestoreHelper.getInterestsWithId(category)
+                            val docId = FirestoreHelper.addInterest(category, interestText).toString()
+                            interests = interests + Pair(interestText, docId)
                             interestText = ""
                             Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
                         } catch (e: Exception) {
@@ -76,29 +80,36 @@ fun InterestInputScreen(navController: NavController, category: String) {
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(interests) { (interest, docId) ->
+            itemsIndexed(interests, key = { index, item -> "${item.second}_$index" }) { index, (interest, docId) ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("• $interest", fontSize = 18.sp)
+                    Text(
+                        "• $interest",
+                        fontSize = 18.sp,
+                        modifier = Modifier.weight(1f)
+                    )
 
-                    Button(
+                    IconButton(
                         onClick = {
                             scope.launch {
                                 try {
                                     FirestoreHelper.deleteInterest(category, docId)
-                                    interests = FirestoreHelper.getInterestsWithId(category)
+                                    interests = interests.toMutableList().also { it.removeAt(index) }
                                     Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show()
                                 } catch (e: Exception) {
                                     Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                                 }
                             }
-                        },
-                        modifier = Modifier.height(36.dp)
+                        }
                     ) {
-                        Text("Delete")
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "Delete Interest",
+                            tint = MaterialTheme.colorScheme.error
+                        )
                     }
                 }
             }

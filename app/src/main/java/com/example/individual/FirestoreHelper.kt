@@ -1,36 +1,30 @@
 package com.example.individual
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 object FirestoreHelper {
-
     private val db = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
 
-    fun getUserId(): String? = auth.currentUser?.uid
-
-    fun getCategoryCollection(category: String) =
-        getUserId()?.let { uid -> db.collection("users").document(uid).collection(category) }
-
-    // Add interest
-    suspend fun addInterest(category: String, interest: String) {
-        getCategoryCollection(category)?.add(mapOf("interest" to interest))?.await()
+    // Add a new interest and return the docId
+    suspend fun addInterest(category: String, interest: String): String {
+        val docRef = db.collection(category).document()
+        docRef.set(mapOf("interest" to interest)).await()
+        return docRef.id
     }
 
-    // Get interests with their document IDs
+    // Get all interests with docId
     suspend fun getInterestsWithId(category: String): List<Pair<String, String>> {
-        val docs = getCategoryCollection(category)?.get()?.await()
-        return docs?.documents?.mapNotNull { doc ->
-            val text = doc.getString("interest")
-            val id = doc.id
-            if (text != null) text to id else null
-        } ?: emptyList()
+        val snapshot = db.collection(category).get().await()
+        return snapshot.documents.map { doc ->
+            val interest = doc.get("interest").toString()
+            val docId = doc.id
+            Pair(interest, docId)
+        }
     }
 
-    // Delete interest by document ID
+    // Delete an interest by docId
     suspend fun deleteInterest(category: String, docId: String) {
-        getCategoryCollection(category)?.document(docId)?.delete()?.await()
+        db.collection(category).document(docId).delete().await()
     }
 }
