@@ -3,12 +3,10 @@ package com.example.individual
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.*
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,14 +19,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun InterestInputScreen(navController: NavController, category: String) {
     val context = LocalContext.current
-    var interestText by remember { mutableStateOf("") }
-    var interests by remember { mutableStateOf(listOf<Pair<String, String>>()) } // Pair<text, docId>
     val scope = rememberCoroutineScope()
 
-    // Load interests
+    var interestText by remember { mutableStateOf("") }
+    var interests by remember { mutableStateOf(listOf<Pair<String, String>>()) } // Pair<interest, docId>
+
+    // Load interests from Firestore when screen starts
     LaunchedEffect(category) {
-        interests = FirestoreHelper.getInterestsWithId(category)
-            .map { (interest, docId) -> Pair(interest.toString(), docId.toString()) }
+        FirestoreHelper.getInterestsWithId(category) { list ->
+            interests = list.map { Pair(it.first.toString(), it.second.toString()) }
+        }
     }
 
     Column(
@@ -54,10 +54,11 @@ fun InterestInputScreen(navController: NavController, category: String) {
                 if (interestText.isNotBlank()) {
                     scope.launch {
                         try {
-                            val docId = FirestoreHelper.addInterest(category, interestText).toString()
-                            interests = interests + Pair(interestText, docId)
-                            interestText = ""
-                            Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                            FirestoreHelper.addInterest(category, interestText) { docId ->
+                                interests = interests + Pair(interestText, docId)
+                                interestText = ""
+                                Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show()
+                            }
                         } catch (e: Exception) {
                             Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                         }
@@ -80,14 +81,17 @@ fun InterestInputScreen(navController: NavController, category: String) {
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            itemsIndexed(interests, key = { index, item -> "${item.second}_$index" }) { index, (interest, docId) ->
+            items(
+                items = interests,
+                key = { it.second } // unique Firestore docId
+            ) { (interest, docId) ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        "• $interest",
+                        text = "• $interest",
                         fontSize = 18.sp,
                         modifier = Modifier.weight(1f)
                     )
@@ -96,9 +100,10 @@ fun InterestInputScreen(navController: NavController, category: String) {
                         onClick = {
                             scope.launch {
                                 try {
-                                    FirestoreHelper.deleteInterest(category, docId)
-                                    interests = interests.toMutableList().also { it.removeAt(index) }
-                                    Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show()
+                                    FirestoreHelper.deleteInterest(category, docId) {
+                                        interests = interests.filter { it.second != docId }
+                                        Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show()
+                                    }
                                 } catch (e: Exception) {
                                     Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                                 }

@@ -1,30 +1,60 @@
 package com.example.individual
 
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
 
 object FirestoreHelper {
+
     private val db = FirebaseFirestore.getInstance()
 
-    // Add a new interest and return the docId
-    suspend fun addInterest(category: String, interest: String): String {
-        val docRef = db.collection(category).document()
-        docRef.set(mapOf("interest" to interest)).await()
-        return docRef.id
+    // Fetch all interests for a category
+    fun getInterestsWithId(
+        category: String,
+        callback: (List<Pair<String, String>>) -> Unit
+    ) {
+        db.collection(category)
+            .get()
+            .addOnSuccessListener { result ->
+                val list = result.map { doc ->
+                    Pair(doc.getString("text") ?: "", doc.id)
+                }
+                callback(list)
+            }
+            .addOnFailureListener {
+                callback(emptyList())
+            }
     }
 
-    // Get all interests with docId
-    suspend fun getInterestsWithId(category: String): List<Pair<String, String>> {
-        val snapshot = db.collection(category).get().await()
-        return snapshot.documents.map { doc ->
-            val interest = doc.get("interest").toString()
-            val docId = doc.id
-            Pair(interest, docId)
-        }
+    // Add interest and return the docId via callback
+    fun addInterest(
+        category: String,
+        text: String,
+        callback: (String) -> Unit
+    ) {
+        val data = hashMapOf("text" to text)
+        db.collection(category)
+            .add(data)
+            .addOnSuccessListener { docRef ->
+                callback(docRef.id)
+            }
+            .addOnFailureListener {
+                callback("")
+            }
     }
 
-    // Delete an interest by docId
-    suspend fun deleteInterest(category: String, docId: String) {
-        db.collection(category).document(docId).delete().await()
+    // Delete interest by docId
+    fun deleteInterest(
+        category: String,
+        docId: String,
+        callback: () -> Unit
+    ) {
+        db.collection(category)
+            .document(docId)
+            .delete()
+            .addOnSuccessListener {
+                callback()
+            }
+            .addOnFailureListener {
+                callback()
+            }
     }
 }
