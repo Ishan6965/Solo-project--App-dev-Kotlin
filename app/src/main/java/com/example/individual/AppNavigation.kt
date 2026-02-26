@@ -11,48 +11,36 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = "dashboard" // Dashboard is the first screen
+        startDestination = "dashboard"
     ) {
 
-        // Dashboard Screen
         composable("dashboard") {
             DashboardScreen(navController)
         }
 
-        // Login Screen
         composable("login") {
             LoginScreen(navController)
         }
 
-        // Sign Up Screen
         composable("signup") {
             SignUpScreen(navController)
         }
 
-        // Main screen (your existing app screen)
         composable("main") {
             MainScreen(navController)
         }
 
-        // Categorization screen
         composable("categorization") {
             MyCategorizationScreen(navController)
         }
 
-        // Category-specific screens
-        composable("short_term") {
-            ShortTermScreen(navController)
+        // NEW: All category inputs
+        composable("interest/{category}") { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category") ?: "unknown"
+            InterestInputScreen(navController, category)
         }
 
-        composable("long_term") {
-            LongTermScreen(navController)
-        }
-
-        composable("wishlist") {
-            WishlistScreen(navController)
-        }
-
-        // Settings & Feedback screen
+        // Settings & Feedback
         composable("settings_feedback") {
             SettingsFeedbackScreen(navController)
         }
