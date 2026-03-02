@@ -14,7 +14,6 @@ import androidx.navigation.NavController
 
 @Composable
 fun MyCategorizationScreen(navController: NavController) {
-
     Column(modifier = Modifier.fillMaxSize()) {
 
         Box(
@@ -24,10 +23,7 @@ fun MyCategorizationScreen(navController: NavController) {
                 .background(Color.LightGray),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = "Choose your categorization",
-                fontSize = 28.sp
-            )
+            Text("Choose your categorization", fontSize = 28.sp)
         }
 
         Column(
@@ -40,35 +36,23 @@ fun MyCategorizationScreen(navController: NavController) {
         ) {
 
             Button(
-                onClick = {
-                    navController.navigate("interest_input/short_term")
-                },
+                onClick = { navController.navigate("interest_input/short_term") },
                 modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Short Term Goals")
-            }
+            ) { Text("Short Term Goals") }
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = {
-                    navController.navigate("interest_input/long_term")
-                },
+                onClick = { navController.navigate("interest_input/long_term") },
                 modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Long Term Goals")
-            }
+            ) { Text("Long Term Goals") }
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = {
-                    navController.navigate("interest_input/wishlist")
-                },
+                onClick = { navController.navigate("interest_input/wishlist") },
                 modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Wishlist")
-            }
+            ) { Text("Wishlist") }
         }
     }
 }

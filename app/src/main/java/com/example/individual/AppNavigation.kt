@@ -9,47 +9,28 @@ import androidx.navigation.compose.rememberNavController
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = "dashboard" // Start from Dashboard
-    ) {
+    NavHost(navController, startDestination = "dashboard") {
 
-        // Dashboard Screen
-        composable("dashboard") {
-            DashboardScreen(navController)
+        composable("dashboard") { DashboardScreen(navController) }
+        composable("login") { LoginScreen(navController) }
+        composable("signup") { SignUpScreen(navController) }
+        composable("main") { MainScreen(navController) }
+        composable("categorization") { MyCategorizationScreen(navController) }
+
+        // Interest screens using reusable component
+        composable("interest_input/short_term") {
+            InterestInputScreen(navController, "short_term", "Short Term Goals")
+        }
+        composable("interest_input/long_term") {
+            InterestInputScreen(navController, "long_term", "Long Term Goals")
+        }
+        composable("interest_input/wishlist") {
+            InterestInputScreen(navController, "wishlist", "Wishlist")
+        }
+        composable("shopping_list") {
+            InterestInputScreen(navController, "shopping_list", "Shopping List")
         }
 
-        // Login Screen
-        composable("login") {
-            LoginScreen(navController)
-        }
-
-        // Main App Screen (after successful login)
-        composable("main") {
-            MainScreen(navController)
-        }
-
-        // Categorization screen
-        composable("categorization") {
-            MyCategorizationScreen(navController)
-        }
-
-        // Category-specific screens
-        composable("short_term") {
-            ShortTermScreen(navController)
-        }
-
-        composable("long_term") {
-            LongTermScreen(navController)
-        }
-
-        composable("wishlist") {
-            WishlistScreen(navController)
-        }
-
-        // Settings & Feedback screen
-        composable("settings_feedback") {
-            SettingsFeedbackScreen() // just the two-button page
-        }
+        composable("settings_feedback") { SettingsFeedbackScreen(navController) }
     }
 }

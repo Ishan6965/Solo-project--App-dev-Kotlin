@@ -16,20 +16,24 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 
 @Composable
-fun InterestInputScreen(navController: NavController, category: String, screenTitle: String) {
+fun ShoppingListScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
     var text by remember { mutableStateOf("") }
-    var items by remember { mutableStateOf(listOf<Pair<String,String>>()) }
+    var items by remember { mutableStateOf(listOf<Pair<String, String>>()) }
+    val collection = "shopping_list"
 
     // Load items when screen opens
-    LaunchedEffect(category) {
+    LaunchedEffect(Unit) {
         try {
-            items = FirebaseHelper.getItems(category)
-        } catch (e: Exception) { e.printStackTrace() }
+            items = FirebaseHelper.getItems(collection)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(screenTitle, fontSize = 24.sp)
+
+        Text("Your Shopping List", fontSize = 24.sp)
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
@@ -39,13 +43,15 @@ fun InterestInputScreen(navController: NavController, category: String, screenTi
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = {
                 IconButton(onClick = {
-                    if(text.isNotBlank()) {
+                    if (text.isNotBlank()) {
                         scope.launch {
                             try {
-                                val id = FirebaseHelper.addItem(category, text)
+                                val id = FirebaseHelper.addItem(collection, text)
                                 items = items + (text to id)
                                 text = ""
-                            } catch (e: Exception) { e.printStackTrace() }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
                         }
                     }
                 }) {
@@ -67,9 +73,11 @@ fun InterestInputScreen(navController: NavController, category: String, screenTi
                     IconButton(onClick = {
                         scope.launch {
                             try {
-                                FirebaseHelper.deleteItem(category, docId)
+                                FirebaseHelper.deleteItem(collection, docId)
                                 items = items.toMutableList().also { it.removeAt(index) }
-                            } catch (e: Exception) { e.printStackTrace() }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
                         }
                     }) {
                         Icon(Icons.Default.Delete, contentDescription = "Delete")

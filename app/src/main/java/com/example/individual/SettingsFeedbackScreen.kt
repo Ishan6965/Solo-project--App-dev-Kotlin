@@ -10,37 +10,61 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @Composable
-fun SettingsFeedbackScreen() {
+fun SettingsFeedbackScreen(navController: NavController) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFC107)) // Bright yellow background
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .background(Color(0xFFFFF9C4)) // soft yellow background
     ) {
-        // Settings Button
-        Button(
-            onClick = { /* Does nothing for now */ },
+
+        // Top title box
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp)
+                .background(Color.White)
+                .padding(vertical = 20.dp),
+            contentAlignment = Alignment.Center
         ) {
-            Text("Settings", fontSize = 28.sp)
+            Text(
+                text = "Settings and Feedback",
+                fontSize = 24.sp
+            )
         }
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(190.dp))
 
-        // Feedback Button
-        Button(
-            onClick = { /* Does nothing for now */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
+        // Buttons column
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Feedback", fontSize = 28.sp)
+
+            // Settings button (does nothing for now)
+            Button(
+                onClick = { /* TODO: navigate to settings later */ },
+                modifier = Modifier
+                    .width(220.dp)
+                    .height(95.dp)
+            ) {
+                Text(text = "Settings", fontSize = 28.sp)
+            }
+
+            Spacer(modifier = Modifier.height(110.dp))
+
+            // Feedback button (does nothing for now)
+            Button(
+                onClick = { /* TODO: navigate to feedback later */ },
+                modifier = Modifier
+                    .width(225.dp)
+                    .height(100.dp)
+            ) {
+                Text(text = "Give Feedback", fontSize = 27.sp)
+            }
+
         }
     }
 }

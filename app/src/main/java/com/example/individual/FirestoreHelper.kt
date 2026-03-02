@@ -1,60 +1,51 @@
 package com.example.individual
 
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
-object FirestoreHelper {
+object FirebaseHelper {
 
     private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
-    // Fetch all interests for a category
-    fun getInterestsWithId(
-        category: String,
-        callback: (List<Pair<String, String>>) -> Unit
-    ) {
-        db.collection(category)
+    // Ensure user is signed in anonymously
+    suspend fun ensureUser(): String {
+        if (auth.currentUser == null) {
+            val result = auth.signInAnonymously().await()
+            return result.user?.uid ?: throw Exception("Failed to sign in")
+        }
+        return auth.currentUser!!.uid
+    }
+
+    // Add item to a collection
+    suspend fun addItem(collection: String, text: String): String {
+        ensureUser()
+        val docRef = db.collection(collection).add(
+            mapOf(
+                "text" to text,
+                "timestamp" to System.currentTimeMillis()
+            )
+        ).await()
+        return docRef.id
+    }
+
+    // Delete item from collection
+    suspend fun deleteItem(collection: String, docId: String) {
+        ensureUser()
+        db.collection(collection).document(docId).delete().await()
+    }
+
+    // Get all items from collection
+    suspend fun getItems(collection: String): List<Pair<String, String>> {
+        ensureUser()
+        val snapshot = db.collection(collection)
+            .orderBy("timestamp")
             .get()
-            .addOnSuccessListener { result ->
-                val list = result.map { doc ->
-                    Pair(doc.getString("text") ?: "", doc.id)
-                }
-                callback(list)
-            }
-            .addOnFailureListener {
-                callback(emptyList())
-            }
-    }
-
-    // Add interest and return the docId via callback
-    fun addInterest(
-        category: String,
-        text: String,
-        callback: (String) -> Unit
-    ) {
-        val data = hashMapOf("text" to text)
-        db.collection(category)
-            .add(data)
-            .addOnSuccessListener { docRef ->
-                callback(docRef.id)
-            }
-            .addOnFailureListener {
-                callback("")
-            }
-    }
-
-    // Delete interest by docId
-    fun deleteInterest(
-        category: String,
-        docId: String,
-        callback: () -> Unit
-    ) {
-        db.collection(category)
-            .document(docId)
-            .delete()
-            .addOnSuccessListener {
-                callback()
-            }
-            .addOnFailureListener {
-                callback()
-            }
+            .await()
+        return snapshot.documents.map { doc ->
+            val text = doc.getString("text") ?: ""
+            text to doc.id
+        }
     }
 }
